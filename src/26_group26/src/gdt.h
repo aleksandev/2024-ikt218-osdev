@@ -1,4 +1,4 @@
-
+#include "libc/stdint.h"
 
 struct gdt_entry_struct
 {
