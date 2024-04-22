@@ -63,6 +63,7 @@ add_executable(uiaos-kernel
 	src/kernel.cpp
 	src/gdt.h
 	src/gdt.c
+	src/gdt.asm
 )
 
 # Include directories for the kernel target
