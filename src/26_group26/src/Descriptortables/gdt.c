@@ -2,7 +2,6 @@
 #include "gdt.h"
 
 extern void gdt_flush(uint32_t);
-static void init_gdt();
 static void gdt_set_gate(int32_t,uint32_t,uint32_t,uint8_t,uint8_t);
 
 gdt_entry_t gdt_entries[5];
@@ -13,7 +12,7 @@ void init_descriptor_tables()
    init_gdt();
 }
 
-static void init_gdt()
+void init_gdt()
 {
    gdt_ptr.limit = (sizeof(gdt_entry_t) * 5) - 1;
    gdt_ptr.base  = (uint32_t)&gdt_entries;
