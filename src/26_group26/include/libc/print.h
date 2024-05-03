@@ -1,13 +1,18 @@
-void print_string(const char* str) {
-    // VGA text mode buffer address
-    volatile char *video = (volatile char*)0xB8000;
-    while (*str) {
-        *video++ = *str++;
-        *video++ = 0x0F; // Bright White on Black background attribute byte.
-    }
-}
+#ifndef PRINT_H
+#define PRINT_H
 
-// A basic printf function that only handles strings.
-void printf(const char* format) {
-    print_string(format);
-}
+
+#include "stdint.h"
+
+// Write a single character out to the screen.
+void monitor_put(char c);
+
+// Clear the screen to all black.
+void monitor_clear();
+
+// Output a null-terminated ASCII string to the monitor.
+void monitor_write(const char *c);
+
+void monitor_write_dec(unsigned int number);
+
+#endif // PRINT_H

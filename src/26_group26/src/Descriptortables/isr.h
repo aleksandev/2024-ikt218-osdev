@@ -1,15 +1,17 @@
-//
-// isr.h -- Interface and structures for high level interrupt service routines.
-// Part of this code is modified from Bran's kernel development tutorials.
-// Rewritten for JamesM's kernel development tutorials.
-//
+#ifndef ISR_H
+#define ISR_H
 
 #include "libc/stdint.h"
 
-typedef struct registers
-{
-   uint32_t ds;                  // Data segment selector
-   uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
-   uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
-   uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
+// Structure representing the registers saved on the stack during an interrupt.
+typedef struct {
+    uint32_t ds;                  // Data segment selector
+    uint32_t edi, esi, ebp, unused, ebx, edx, ecx, eax;  // Pushed by pusha.
+    uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
+    uint32_t eip, cs, eflags, esp, ss; // Pushed by the processor automatically.
 } registers_t;
+
+void isr_handler(registers_t regs);
+
+extern void isr_common_stub(); 
+#endif // ISR_H

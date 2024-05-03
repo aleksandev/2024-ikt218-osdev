@@ -1,21 +1,20 @@
+/*
 #include "idt.h"
 
 extern void idt_flush(uint32_t);
-
-
+//static void init_idt();
 static void idt_set_gate(uint8_t,uint32_t,uint16_t,uint8_t);
 
 idt_entry_t idt_entries[256];
 idt_ptr_t   idt_ptr;
 
 
-
-/*void init_descriptor_tables()
+void init_descriptor_tables()
 {
   init_idt();
-}*/
+}
 
-void init_idt()
+static void init_idt()
 {
    idt_ptr.limit = sizeof(idt_entry_t) * 256 -1;
    idt_ptr.base  = (uint32_t)&idt_entries;
@@ -40,3 +39,4 @@ static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags
    // It sets the interrupt gate's privilege level to 3.
    idt_entries[num].flags   = flags /* | 0x60 */;
 }
+*/
