@@ -9,6 +9,10 @@ static void init_idt();
 static void gdt_set_gate(int, uint32_t, uint32_t, uint8_t, uint8_t);
 static void idt_set_gate(uint8_t, uint32_t, uint16_t, uint8_t);
 
+extern void isr0();
+extern void isr1();
+extern void isr31();
+
 gdt_entry_t gdt_entries[5];
 gdt_ptr_t gdt_ptr;
 idt_entry_t idt_entries[256];
@@ -36,9 +40,12 @@ static void init_idt() {
     idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;
     idt_ptr.base  = (uint32_t)&idt_entries;
 
-    for (int i = 0; i < 256; i++) {
+    /*for (int i = 0; i < 256; i++) {
         idt_set_gate(i, (uint32_t)isr_handler, 0x08, 0x8E);
-    }
+    }*/
+    idt_set_gate(0, (uint32_t)isr0, 0x08, 0x8E);
+    idt_set_gate(1, (uint32_t)isr1, 0x08, 0x8E);
+    idt_set_gate(31, (uint32_t)isr31, 0x08, 0x8E);
 
     idt_flush((uint32_t)&idt_ptr);
 }

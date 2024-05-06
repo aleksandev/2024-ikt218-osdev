@@ -12,6 +12,5 @@ typedef struct {
 } registers_t;
 
 void isr_handler(registers_t regs);
-
-//extern void isr_handler(); 
+ 
 #endif // ISR_H

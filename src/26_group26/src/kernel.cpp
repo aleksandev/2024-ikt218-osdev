@@ -9,11 +9,13 @@ extern "C" int kernel_main(void);
 int kernel_main(){
     
     init_descriptor_tables();
-    print_string("Hello, World!");
+    printf("Hello, World!\n");
 
-    asm volatile ("int $0x00"); 
+    asm volatile ("int $0x0");
+    printf("\n");
     asm volatile ("int $0x1");
-    asm volatile ("int $0x31");  
-
+    printf("\n");
+    asm volatile ("int $0x1F");  
+    while(1){}
     return 0;
 }
