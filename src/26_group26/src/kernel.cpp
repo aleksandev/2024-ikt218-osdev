@@ -8,13 +8,12 @@ extern "C" int kernel_main(void);
 
 int kernel_main(){
     
-    //init_gdt();
-    //init_idt();
+    init_descriptor_tables();
+    print_string("Hello, World!");
 
-
-    monitor_write("Hello, World! Welcome to the Kernel.");
-
-    //asm ("int $0x00");
+    asm volatile ("int $0x00"); 
+    asm volatile ("int $0x1");
+    asm volatile ("int $0x31");  
 
     return 0;
 }

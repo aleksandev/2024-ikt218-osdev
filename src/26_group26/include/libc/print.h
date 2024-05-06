@@ -4,15 +4,8 @@
 
 #include "stdint.h"
 
-// Write a single character out to the screen.
-void monitor_put(char c);
+void printf(const char* format);
 
-// Clear the screen to all black.
-void monitor_clear();
-
-// Output a null-terminated ASCII string to the monitor.
-void monitor_write(const char *c);
-
-void monitor_write_dec(unsigned int number);
+void print_string(const char* str);
 
 #endif // PRINT_H
