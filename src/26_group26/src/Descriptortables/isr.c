@@ -1,6 +1,9 @@
 #include "isr.h"
 #include "libc/print.h"  // Assuming a simple text-output function is available
+#include "common.h"
+#include "keyboard.h"
 
+isr_t interrupt_handlers[256];
 
 void itoa(uint32_t n, char* buffer) {
     int i = 0;
@@ -49,6 +52,21 @@ void irq_handler(registers_t regs)
 {
    // Send an EOI (end of interrupt) signal to the PICs.
    // If this interrupt involved the slave.
+
+    uint8_t intno = regs.int_no & 0xFF;
+    if (intno == 33)
+    {
+        //printf("a");
+        //unsigned char scancode = inb(0x60);
+        keyboard_handler();
+    }
+
+
+   
+
+
+
+
    if (regs.int_no >= 40)
    {
        // Send reset signal to slave.
@@ -63,9 +81,9 @@ void irq_handler(registers_t regs)
        handler(regs);
    }
 }
-isr_t interrupt_handlers[256];
 
-void register_interrupt_handler(u8int n, isr_t handler)
+
+void register_interrupt_handler(uint8_t n, isr_t handler)
 {
   interrupt_handlers[n] = handler;
 }

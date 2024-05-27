@@ -69,6 +69,7 @@ add_executable(uiaos-kernel
 	src/Descriptortables/interrupts.asm
 	src/Descriptortables/print.c
 	src/Descriptortables/common.c
+	src/Descriptortables/keyboard.c
 )
 
 # Include directories for the kernel target

@@ -1,5 +1,6 @@
 #include "descript_tables.h"
 #include "isr.h"
+#include "common.h"
 
 extern void gdt_flush(uint32_t);
 extern void idt_flush(uint32_t);
@@ -12,6 +13,22 @@ static void idt_set_gate(uint8_t, uint32_t, uint16_t, uint8_t);
 extern void isr0();
 extern void isr1();
 extern void isr31();
+extern void irq0();
+extern void irq1();
+extern void irq2();
+extern void irq3();
+extern void irq4();
+extern void irq5();
+extern void irq6();
+extern void irq7();
+extern void irq8();
+extern void irq9();
+extern void irq10();
+extern void irq11();
+extern void irq12();
+extern void irq13();
+extern void irq14();
+extern void irq15();
 
 gdt_entry_t gdt_entries[5];
 gdt_ptr_t gdt_ptr;
@@ -43,11 +60,9 @@ static void init_idt() {
     /*for (int i = 0; i < 256; i++) {
         idt_set_gate(i, (uint32_t)isr_handler, 0x08, 0x8E);
     }*/
-    idt_set_gate(0, (uint32_t)isr0, 0x08, 0x8E);
-    idt_set_gate(1, (uint32_t)isr1, 0x08, 0x8E);
-    idt_set_gate(31, (uint32_t)isr31, 0x08, 0x8E);
 
 
+    
     outb(0x20, 0x11);
     outb(0xA0, 0x11);
     outb(0x21, 0x20);
@@ -58,6 +73,12 @@ static void init_idt() {
     outb(0xA1, 0x01);
     outb(0x21, 0x0);
     outb(0xA1, 0x0);
+
+    idt_set_gate(0, (uint32_t)isr0, 0x08, 0x8E);
+    idt_set_gate(1, (uint32_t)isr1, 0x08, 0x8E);
+    idt_set_gate(31, (uint32_t)isr31, 0x08, 0x8E);
+
+
 
     idt_set_gate(32, (uint32_t)irq0, 0x08, 0x8E);
     idt_set_gate(33, (uint32_t)irq1, 0x08, 0x8E);

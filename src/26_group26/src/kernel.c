@@ -16,6 +16,10 @@ int kernel_main();
 
 int main(uint32_t magic, struct multiboot_info* mb_info_addr) {
     
+    int a = 5;
+    a = 10;
+    a = 15;
+    a = 20;
     
     // Call cpp kernel_main (defined in kernel.cpp)
     return kernel_main();
