@@ -70,6 +70,12 @@ add_executable(uiaos-kernel
 	src/Descriptortables/print.c
 	src/Descriptortables/common.c
 	src/Descriptortables/keyboard.c
+	src/Descriptortables/pit.c
+	src/Descriptortables/malloc.c
+	src/Descriptortables/memutils.c
+	src/Descriptortables/paging.c
+	src/Descriptortables/system.c
+	src/Descriptortables/panic.c
 )
 
 # Include directories for the kernel target
