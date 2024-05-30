@@ -1,4 +1,5 @@
 #include "libc/print.h"
+#include "libc/stdbool.h"
 // Screen dimensions
 #define SCREEN_WIDTH 80
 #define SCREEN_HEIGHT 25
@@ -35,7 +36,73 @@ void print_string(const char* str) {
     }
 }
 
+void print_char(char c) {
+    char str[2] = {c, '\0'};
+    print_string(str);
+}
 
-void printf(const char* format) {
-    print_string(format);
+void print_int(int value) {
+    char buffer[12]; // Enough to hold -2147483648
+    char* p = buffer + 11;
+    bool is_negative = value < 0;
+
+    *p = '\0';
+
+    if (is_negative) {
+        value = -value;
+    }
+
+    do {
+        *--p = '0' + (value % 10);
+        value /= 10;
+    } while (value > 0);
+
+    if (is_negative) {
+        *--p = '-';
+    }
+
+    print_string(p);
+}
+
+void vprintf(const char* format, va_list args) {
+    while (*format) {
+        if (*format == '%') {
+            format++;
+            switch (*format) {
+                case 's': {
+                    char* str = va_arg(args, char*);
+                    print_string(str);
+                    break;
+                }
+                case 'd': {
+                    int value = va_arg(args, int);
+                    print_int(value);
+                    break;
+                }
+                case 'c': {
+                    char c = (char)va_arg(args, int); // char is promoted to int in varargs
+                    print_char(c);
+                    break;
+                }
+                case '%': {
+                    print_char('%');
+                    break;
+                }
+                default:
+                    print_char('%');
+                    print_char(*format);
+                    break;
+            }
+        } else {
+            print_char(*format);
+        }
+        format++;
+    }
+}
+
+void printf(const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
 }
